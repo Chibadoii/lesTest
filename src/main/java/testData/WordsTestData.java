@@ -11,8 +11,9 @@ public class WordsTestData extends BaseTestData{
 
 
     public WordsTestData(final String key){
-        String stendKey = System.getProperty("stend");
+        String stendKey = System.getProperty("StendKey");
         String propPath = "testData/words.properties";
+
         word1 = PropertyLoader.loadProperty(stendKey + "_" + key + "_1",propPath);
         word2 = PropertyLoader.loadProperty(stendKey + "_" + key + "_2",propPath);
         word3 = PropertyLoader.loadProperty(stendKey + "_" + key + "_3",propPath);

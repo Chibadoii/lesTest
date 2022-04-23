@@ -1,5 +1,7 @@
 package SeleniumTests;
 
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -20,10 +22,15 @@ public class BaseTest {
     public void beforeTest(){
         System.setProperty("webdriver.chrome.driver","./src/main/resources/chromedriver.exe");
         ChromeOptions op = new ChromeOptions();
-       /* DesiredCapabilities dc = DesiredCapabilities.chrome();
-        dc.setCapability(ChromeOptions.CAPABILITY,op);
-        driver = new ChromeDriver();*/
+
+        //DesiredCapabilities dc = DesiredCapabilities.chrome();
+//        op.setCapability(ChromeOptions.CAPABILITY,op);
+//        driver = new ChromeDriver();
+
+        op.setCapability("version","selenoid/chrome:100.0");
+
         URL hub = null;
+
         try{
             hub = new URL("http://localhost:4444/wd/hub");
         } catch (MalformedURLException e) {
@@ -42,4 +49,9 @@ public class BaseTest {
     public WebDriver getDriver() {
         return driver;
     }
+
+    public byte[]getScreenShot(){
+        return ((TakesScreenshot)driver).getScreenshotAs(OutputType.BYTES);
+    }
 }
+

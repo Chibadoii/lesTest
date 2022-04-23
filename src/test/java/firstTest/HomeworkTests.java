@@ -44,7 +44,7 @@ public class HomeworkTests extends BaseTest {
 
     }
     //Пришлось по простому
-    public TestCalculator calc;
+    public TestCalculator calc = new TestCalculator();
     private final double Num1 = 15.5;
     private final double Num2 = 7.5;
 

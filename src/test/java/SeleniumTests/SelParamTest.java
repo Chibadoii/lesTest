@@ -1,5 +1,6 @@
 package SeleniumTests;
 
+import org.apache.commons.io.FileUtils;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.Assertion;
@@ -7,8 +8,11 @@ import pageObject.google.InitPageObject;
 import pageObject.google.SearchResultPageObject;
 import testData.WordsTestData;
 
+import java.io.File;
+import java.io.IOException;
+
 public class SelParamTest extends BaseTest{
-        @DataProvider(name = "setWords", parallel = true)
+        @DataProvider(name = "setWords", parallel = false)
     public Object[][] getData (){
         Object[][] words = new Object[][]{
                 {new WordsTestData("word").getWord1(),"word1"},
@@ -22,12 +26,20 @@ public class SelParamTest extends BaseTest{
     @Test(dataProvider = "setWords")
     public void startTest(String word, String testName){
         getDriver().get(stendUrl);
+        getDriver().get("https://www.google.ru/");
         getDriver().manage().window().maximize();
         InitPageObject in = new InitPageObject(getDriver());
-        in.setSetSearchText("Привет");
+        in.setSetSearchText(word);
         in.clickSubmitText();
         SearchResultPageObject sr = new SearchResultPageObject(getDriver());
         Assertion as = new Assertion();
         as.assertTrue(sr.isImagesTabButtonIsExist());
+
+        File file = new File("./src/main/resources/" + testName +".jpg");
+        try{
+            FileUtils.writeByteArrayToFile(file, getScreenShot());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
